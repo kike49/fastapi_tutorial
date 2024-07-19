@@ -1,24 +1,44 @@
-version: "3"
 services:
   api:
-    build: .
-    ports:
-      - 8000:8000
-    volumes:
-      - ./:/usr/src/app
-    env_file:
-       - ./.env
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    build: .  # Build the Docker image for the API service from the current directory (where Dockerfile is located)
+    # In production, we don't need to build the image but download it from Dockerhub:
+    # image: kike49/fastapi_tutorial:latest
     depends_on:
-      - postgres
+      - postgres  # Ensure the postgres service is started before the api service
+    ports:
+      - "8000:8000"  # Map port 8000 on the host to port 8000 on the container
+    volumes:
+      - ./:/usr/src/app  # Mount the current directory to /usr/src/app inside the container
+    environment:
+      - DATABASE_HOSTNAME=postgres  # Set the database hostname to 'postgres' (service name)
+      - DATABASE_PORT=5432
+      - DATABASE_PASSWORD=culocaca
+      - DATABASE_NAME=fastapi
+      - DATABASE_USERNAME=postgres
+      - SECRET_KEY=09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload  # Override the default command with uvicorn to start the FastAPI app
 
   postgres:
-    image: postgres
+    image: postgres  # Use the official PostgreSQL image from Docker Hub
     environment:
       - POSTGRES_PASSWORD=culocaca
       - POSTGRES_DB=fastapi
     volumes:
-      - postgres-db:/var/lib/postgresql/data
+      - postgres-db:/var/lib/postgresql/data  # Persist database data in a named volume
+    ports:
+      - "5432:5432"  # Map port 5432 on the host to port 5432 on the container for external access
+
+  pgadmin:
+    image: dpage/pgadmin4  # Use the official pgAdmin4 image from Docker Hub
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com  # Set the default pgAdmin4 login
+      PGADMIN_DEFAULT_PASSWORD: admin 
+    ports:
+      - "5050:80"  # Map port 5050 on the host to port 80 on the container for accessing pgAdmin4
+    depends_on:
+      - postgres  # Ensure the postgres service is started before the pgadmin service
 
 volumes:
-  postgres-db:
+  postgres-db:  # Define a named volume for persisting PostgreSQL data
