@@ -11,7 +11,7 @@ import pytest
 
 # Function to create the testing database if it doesn't exist
 def create_test_database(dsn, database_name):
-    # Strip off the database name from the dsn to connect to the default postgres database: postgresql://username:password@hostname/postgres. It connects to the default postgres database to perform administrative tasks, such as creating a new database
+    # Strip off the database name from the dsn to connect to the default postgres database: postgresql://username:password@hostname:port/postgres. It connects to the default postgres database to perform administrative tasks, such as creating a new database
     default_dsn = dsn.rsplit('/', 1)[0] + "/postgres"
     conn = psycopg2.connect(default_dsn)
     conn.autocommit = True
@@ -25,7 +25,7 @@ def create_test_database(dsn, database_name):
 
 # Database names for testing
 test_db_name = f"{settings.DATABASE_NAME}_test"
-dsn = f"postgresql://{settings.DATABASE_USERNAME}:{settings.DATABASE_PASSWORD}@{settings.DATABASE_HOSTNAME}/{test_db_name}"
+dsn = f"postgresql://{settings.DATABASE_USERNAME}:{settings.DATABASE_PASSWORD}@{settings.DATABASE_HOSTNAME}:{settings.DATABASE_PORT}/{test_db_name}"
 
 # Run the DB test creation function
 create_test_database(dsn, test_db_name)

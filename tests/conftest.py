@@ -15,7 +15,7 @@ from app import models
 
 # Function to create the testing database if it doesn't exist
 def create_test_database(dsn, database_name):
-    default_dsn = dsn.rsplit('/', 1)[0] + "/postgres" # Strip off the database name from the dsn to connect to the default postgres database: postgresql://username:password@hostname/postgres. It connects to the default postgres database to perform administrative tasks, such as creating a new database
+    default_dsn = dsn.rsplit('/', 1)[0] + "/postgres" # Strip off the database name from the dsn to connect to the default postgres database: postgresql://username:password@hostname:port/postgres. It connects to the default postgres database to perform administrative tasks, such as creating a new database
     conn = psycopg2.connect(default_dsn)
     conn.autocommit = True
     cursor = conn.cursor()
@@ -30,7 +30,7 @@ def create_test_database(dsn, database_name):
 test_db_name = f"{settings.DATABASE_NAME}_test"
 
 # DSN for the test database
-dsn = f"postgresql://{settings.DATABASE_USERNAME}:{settings.DATABASE_PASSWORD}@{settings.DATABASE_HOSTNAME}/{test_db_name}"
+dsn = f"postgresql://{settings.DATABASE_USERNAME}:{settings.DATABASE_PASSWORD}@{settings.DATABASE_HOSTNAME}:{settings.DATABASE_PORT}/{test_db_name}"
 
 # Run the function to create the test database if it doesn't exist
 create_test_database(dsn, test_db_name)

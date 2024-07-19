@@ -5,8 +5,8 @@ from .routers import post, user, auth, vote
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-# Create all database tables defined in the models
-models.Base.metadata.create_all(bind=engine)
+# Create all database tables defined in the models (not needed now as Alembic will do this with autogenerate migrations)
+# models.Base.metadata.create_all(bind=engine)
 
 # Initialize the FastAPI application and include the router from post and user files
 app = FastAPI()

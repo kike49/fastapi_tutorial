@@ -17,12 +17,12 @@ down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
-#To modify tables
+# To modify tables
 def upgrade() -> None:
-    op.create_table('posts', sa.Column("id", sa.Integer, nullable=False, primary_key=True), sa.Column("title", sa.String(), nullable=False))
+    op.create_table('posts', sa.Column("id", sa.Integer(), nullable=False, primary_key=True), sa.Column("title", sa.String(), nullable=False), sa.Column("content", sa.String(), nullable=False), sa.Column("published", sa.Boolean(), nullable=False))
     pass
 
-#To delete tables
+# To delete tables
 def downgrade() -> None:
     op.drop_table("posts")
     pass

@@ -6,8 +6,8 @@ from psycopg2.extras import RealDictCursor
 from sqlalchemy import create_engine
 from .config import settings
 
-# Construct the Data Source Name (DSN) for PostgreSQL connection. Structure: postgresql://DATABASE_USERNAME:DATABASE_PASSWORD@DATABASE_HOSTNAME/DATABASE_NAME
-dsn = f"postgresql://{settings.DATABASE_USERNAME}:{settings.DATABASE_PASSWORD}@{settings.DATABASE_HOSTNAME}/{settings.DATABASE_NAME}"
+# Construct the Data Source Name (DSN) for PostgreSQL connection. Structure: postgresql://DATABASE_USERNAME:DATABASE_PASSWORD@DATABASE_HOSTNAME:DATABASE_PORT/DATABASE_NAME
+dsn = f"postgresql://{settings.DATABASE_USERNAME}:{settings.DATABASE_PASSWORD}@{settings.DATABASE_HOSTNAME}:{settings.DATABASE_PORT}/{settings.DATABASE_NAME}"
 
 # Create the SQLAlchemy engine using the DSN. This engine object will be used to interact with the PostgreSQL database
 engine = create_engine(dsn)
