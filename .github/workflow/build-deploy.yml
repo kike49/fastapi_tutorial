@@ -9,9 +9,9 @@ on: [push, pull_request]
 
 jobs:
   job1:
-    runs-on: ubunto-latest
+    runs-on: ubuntu-latest # Operating System
     steps:
-      - name: pull git repository
-        uses: actions/checkout@v4
+      - name: pull git repository # Just to give it an id
+        uses: actions/checkout@v4 # This is the action to be triggered
       - name: say hello
-        run: 
+        run: echo "hello"
