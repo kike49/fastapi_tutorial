@@ -20,6 +20,21 @@ jobs:
       SECRET_KEY: ${{secrets.SECRET_KEY}}
       ALGORITIHM: ${{secrets.ALGORITIHM}}
       ACCESS_TOKEN_EXPIRE_MINUTES: ${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}}
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
+          POSTGRES_DB: ${{secrets.DATABASE_NAME}}_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
     runs-on: ubuntu-latest # Operating System
     steps:
       - name: pull git repository # Just to give it an id
