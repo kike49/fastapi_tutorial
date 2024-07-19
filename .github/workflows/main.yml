@@ -64,4 +64,4 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/fastapi:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/fastapi_tutorial:latest
