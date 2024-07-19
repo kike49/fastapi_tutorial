@@ -32,7 +32,7 @@ def get_one_post(id: int, db: Session = Depends(get_db)):
 
 # Create a new post
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.PostResponse)
-def create_posts(new_post: schemas.PostCreate, db: Session = Depends(get_db), current_user: schemas.UserLogin = Depends(oauth2.get_current_user)): #This arguments are; new_post: the input from user based on the schema defined, db: the database connection by using the get_db function defined in database.py, current_user: the user needs to be logged in by passing the id to the path and comparing it with the one logged in.
+def create_posts(new_post: schemas.PostBase, db: Session = Depends(get_db), current_user: schemas.UserLogin = Depends(oauth2.get_current_user)): #This arguments are; new_post: the input from user based on the schema defined, db: the database connection by using the get_db function defined in database.py, current_user: the user needs to be logged in by passing the id to the path and comparing it with the one logged in.
     # cursor.execute("""INSERT INTO posts (title, content, published) VALUES (%s, %s, %s) RETURNING *""", (new_post.title, new_post.content, new_post.published))
     # created_post = cursor.fetchall()
     # conn.commit()
@@ -66,7 +66,7 @@ def delete_post(id: int, db: Session = Depends(get_db), current_user: schemas.Us
 
 # Update a post
 @router.put("/{id}", response_model=schemas.PostResponse)
-def update_posts(id: int, updated_post: schemas.PostCreate, db: Session = Depends(get_db), current_user: schemas.UserLogin = Depends(oauth2.get_current_user)):
+def update_posts(id: int, updated_post: schemas.PostBase, db: Session = Depends(get_db), current_user: schemas.UserLogin = Depends(oauth2.get_current_user)):
     # cursor.execute("""UPDATE posts SET title = %s, content = %s, published = %s WHERE id = %s RETURNING *""", (post.title, post.content, post.published, str(id)))
     # updated_post = cursor.fetchone()
     # conn.commit()

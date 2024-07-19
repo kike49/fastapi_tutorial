@@ -1,4 +1,3 @@
-
 from datetime import datetime
 from pydantic import BaseModel, EmailStr
 
@@ -7,11 +6,7 @@ from pydantic import BaseModel, EmailStr
 class UserOut(BaseModel):
     email: EmailStr
     id: int
-    created_at: datetime # This arg should be renamed as registered_at
-
-class UserCreate(BaseModel): # This one is the same as UserLogin and could be replaced
-    email: EmailStr
-    password: str
+    registered_on: datetime
 
 class UserLogin(BaseModel):
     email: EmailStr
@@ -23,9 +18,6 @@ class PostBase(BaseModel):
     title: str
     content: str
     published: bool = True
-
-class PostCreate(PostBase): # This class does not add new code, can be deleted
-    pass
 
 class PostResponse(PostBase):
     id: int
