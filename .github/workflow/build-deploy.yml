@@ -1,0 +1,17 @@
+name: Build and deploy code
+
+on: [push, pull_request]
+  # For speific branches:
+  # push:
+  #   branches: ["main", "test1"]
+  # pull_request:
+  #   branches: ["main", "test2"]
+
+jobs:
+  job1:
+    runs-on: ubunto-latest
+    steps:
+      - name: pull git repository
+        uses: actions/checkout@v4
+      - name: say hello
+        run: 
